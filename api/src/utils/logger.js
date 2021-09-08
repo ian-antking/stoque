@@ -8,9 +8,9 @@ exports.log = (message) => {
 };
 
 exports.warn = (message) => {
-  console.log(formatMessage(message));
+  console.warn(formatMessage(message));
 };
 
 exports.error = (message) => {
-  console.log(formatMessage(message));
+  console.error(formatMessage(message));
 };
