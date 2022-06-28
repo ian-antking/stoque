@@ -1,22 +1,18 @@
-from dotenv import load_dotenv
-import os
 import requests
 
-BASE_URL = 'https://api.barcodelookup.com/v3/products?barcode={}&formatted=y&key={}'
+BASE_URL = 'https://world.openfoodfacts.org/api/2/product/{}.json'
 
-def generate_url(barcode, api_key):
-  return BASE_URL.format(barcode, api_key)
+def generate_url(barcode):
+  return BASE_URL.format(barcode)
 
 if __name__ == "__main__":
-  load_dotenv()
-  api_key = os.environ.get('API_KEY')
-  print(api_key)
   while True:
     barcode = input("> ")
-    search_url = generate_url(barcode, api_key)
+    search_url = generate_url(barcode)
     response = requests.get(search_url)
+    payload = response.json()
   
-    if response.ok:
-      print(response.json()['products'][0])
+    if payload['status'] == 1:
+      print(payload['product']['product_name'])
     else:
       print("product not found")
